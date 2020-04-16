@@ -14,10 +14,33 @@ const populateHTML = (array) => {
         <div class="card-body">
           <h5 class="card-title">${array[i].Title}</h5>
           <h6 class="card-subtitle mb-2 text-muted">Sorti en ${array[i].Year}</h6>
-          <a href="#" class="btn btn-outline-primary mt-4">En savoir plus</a>
+          <a id="myBtn" class="btn btn-outline-primary mt-4">En savoir plus</a>
         </div>
-    </div>
+      </div>
+      <div id="myModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p>${array[i].Title}</p>
+        </div>
+      </div>
     `;
+  }
+}
+
+const getModal = () => {
+  var modal = document.getElementById("myModal");
+  var btn = document.getElementById("myBtn");
+  var span = document.getElementsByClassName("close")[0];
+  btn.addEventListener("click", event => {
+    modal.style.display = "block";
+  })
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
   }
 }
 
@@ -28,10 +51,10 @@ const retrieveMovies = () => {
   wrapper.innerHTML = "";
   count.innerHTML = "";
   let movie = document.getElementById('movieTitle').value
-  console.log(movie);
   fetch(`http://www.omdbapi.com/?s=${movie}&apikey=ae02254d`)
   .then((response) => response.json())
   .then((response2) => populateHTML(response2.Search))
+  .then((response3) => getModal())
 }
 
 const button = document.getElementsByClassName('btn-primary')[0]
