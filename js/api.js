@@ -27,12 +27,12 @@ const retrieveMovies = () => {
   wrapper.classList.remove("border", "rounded")
   wrapper.innerHTML = "";
   count.innerHTML = "";
-  let movie = document.getElementsByTagName('input')[0].value
+  let movie = document.getElementById('movieTitle').value
   console.log(movie);
   fetch(`http://www.omdbapi.com/?s=${movie}&apikey=ae02254d`)
   .then((response) => response.json())
   .then((response2) => populateHTML(response2.Search))
 }
 
-const button = document.getElementsByClassName('btn')[0]
+const button = document.getElementsByClassName('btn-primary')[0]
 button.addEventListener("click", retrieveMovies)
